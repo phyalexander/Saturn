@@ -1,0 +1,13 @@
+# Mac OS
+.DS_Store
+
+# Scala
+/.bsp/
+
+/project/target/
+/project/project/
+/target/
+
+# IDE
+/.idea/
+/.gigaide
