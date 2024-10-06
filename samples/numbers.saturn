@@ -1,0 +1,6 @@
+import std.Int
+
+X : Int
+X + 0 -> X
+
+task: 41 + 0 + 1

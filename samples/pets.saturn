@@ -1,0 +1,7 @@
+
+type Pet = cat dog mouse rat pig
+
+X: Pet, Y: Pet
+X and Y have music -> X and Y play chess
+
+task: cat and pig have music
