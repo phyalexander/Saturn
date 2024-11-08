@@ -32,4 +32,13 @@ object RegexSpecials {
      */
     def escape(string: String): String =
         symbols.foldLeft(string)((s, c) => s.replace(c, "\\" + c))
+
+    /** Unescapes regular expressions' special symbols (RSS) in a string.
+     * <p> So {{{unescape(escape(string)) == string}}} </p>
+     * 
+     * @param string a string that may contain RSS and '\' before them.
+     * @return new string where each '\' before each RSS is removed.
+     */
+    def unescape(string: String): String =
+        symbols.foldLeft(string)((str, sym) => str.replace("\\" ++ sym, sym))
 }
