@@ -1,7 +1,7 @@
 package template
 
 import program.{Formula, RegexSpecials, VarName}
-import java.{ContextsTemplate, Match, RegexTemplate, Utils, Template as JavaTemplate}
+import jlib.{ContextsTemplate, Match, RegexTemplate, Utils, Template as JavaTemplate}
 
 import scala.util.matching.Regex
 

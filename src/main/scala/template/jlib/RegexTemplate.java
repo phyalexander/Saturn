@@ -1,4 +1,4 @@
-package template.java;
+package template.jlib;
 
 import java.io.Serial;
 import java.io.Serializable;

@@ -1,10 +1,10 @@
-package template.java;
+package template.jlib;
 
 
 import java.util.regex.Pattern;
 
-import static template.java.Utils.contextsToRegex;
-import static template.java.Utils.regexToContexts;
+import static template.jlib.Utils.contextsToRegex;
+import static template.jlib.Utils.regexToContexts;
 
 /**
  *
