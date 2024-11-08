@@ -6,7 +6,7 @@ public final class Utils {
 
     private Utils() {}
 
-    static String[] regexToContexts(String regex) {
+    public static String[] regexToContexts(String regex) {
         final var _regex = unescapeRegex(regex);
         final var indexes = new ArrayList<Integer>(10);
         final int iStep = regexVariableRepresentation.length();
@@ -24,7 +24,7 @@ public final class Utils {
         return createContexts(_regex, _indexes);
     }
 
-    static String[] createContexts(String expression, int[] variablePositions) {
+    public static String[] createContexts(String expression, int[] variablePositions) {
         String[] contexts = new String[variablePositions.length];
         contexts[0] = "";
         int i = 0;
@@ -34,7 +34,7 @@ public final class Utils {
         return contexts;
     }
 
-    static String contextsToRegex(String[] contexts) {
+    public static String contextsToRegex(String[] contexts) {
         if (contexts.length == 0) {
             throw new RuntimeException("Can't create RegexTemplate from empty array");
         } else if (contexts.length == 1) {
@@ -58,5 +58,5 @@ public final class Utils {
         return program.RegexSpecials.unescape(s);
     }
 
-    static final String regexVariableRepresentation = "(.+?)";
+    public static final String regexVariableRepresentation = "(.+?)";
 }
