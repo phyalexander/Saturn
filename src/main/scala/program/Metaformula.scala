@@ -3,10 +3,9 @@ package program
 import scala.util.matching.Regex
 import scala.collection.immutable.ArraySeq
 import scala.annotation.tailrec
-
 import java.io.Serializable
-
 import exceptions.*
+import template.Template
 
 
 /** A metaformula in the Saturn language. Used for pattern matching within formulas.
@@ -26,7 +25,7 @@ import exceptions.*
  *
  */
 @SerialVersionUID(108024218808227L)
-case class Metaformula(template: Regex, variables: ArraySeq[(VarName, Type)]) extends Serializable {
+case class Metaformula(template: Template, variables: ArraySeq[(VarName, Type)]) extends Serializable {
 
     /** Attempts to match the metaformula with a given formula.
      *
@@ -42,8 +41,8 @@ case class Metaformula(template: Regex, variables: ArraySeq[(VarName, Type)]) ex
      *          Returns `None` otherwise.
      */
     def matchWith(formula: CharSequence): Option[(Map[VarName, Value], Int, Int)] = {
-        template.findFirstMatchIn(formula)
-            .flatMap(m => matchWithVariables(m.subgroups.iterator).map(n2v => (n2v, m.start, m.end)))
+        template.tryMatch(formula)
+          .flatMap(m => matchWithVariables(m.getGroups.iterator).map(n2v => (n2v, m.getStart, m.getEnd)))
     }
 
     /** Matches captured values with the variables defined in the metaformula.
