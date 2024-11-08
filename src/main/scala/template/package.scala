@@ -14,7 +14,7 @@ import scala.util.matching.Regex
  * */
 final class Template private(private var inner: JavaTemplate) {
 
-    def tryMatch(formula: Formula): Match = inner.tryMatch(formula)
+    def tryMatch(formula: CharSequence): Option[Match] = Option(inner.tryMatch(formula))
 }
 
 object Template {
