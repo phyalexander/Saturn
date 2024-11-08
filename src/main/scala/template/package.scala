@@ -18,7 +18,11 @@ final class Template private(private var inner: JavaTemplate) extends Serializab
 
     override def equals(obj: Any): Boolean = inner.equals(obj)
 
-    override def copy: Template = new Template(inner.copy())
+    def copy: Template = new Template(inner.copy())
+
+    def getContexts: Array[String] = inner.getContexts
+
+    def getRegex: String = inner.getRegex
 }
 
 object Template {
