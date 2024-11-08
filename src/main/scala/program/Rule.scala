@@ -9,6 +9,7 @@ import scala.annotation.tailrec
 import java.io.Serializable
 
 import exceptions.*
+import template.Template
 import utils.{clearBackSlash, trySplit}
 
 
@@ -102,15 +103,16 @@ object Rule {
                 tname, throw NotFoundError(tname, expressionLine))))
             .toMap
 
-        val protoleft = RegexSpecials.escape(raw" : \w+".r.replaceAllIn(parts(0), ""))
-        val left = name2type.keys.foldLeft(protoleft)(_.replace(_, raw"(\S+)")).r
+        // val protoleft = RegexSpecials.escape()
+        // val left = name2type.keys.foldLeft(protoleft)(_.replace(_, raw"(\S+)")).r
+        val template = Template(raw" : \w+".r.replaceAllIn(parts(0), ""), name2type.keys)
 
         val right = parts(1)
         val namesWithTypes = parts(0).split(" ")
             .filter(name2type.contains(_))
             .map(name => (name, name2type(name)))
 
-        new Rule(Metaformula(left, ArraySeq.from(namesWithTypes)), right)
+        new Rule(Metaformula(template, ArraySeq.from(namesWithTypes)), right)
     }
 
 
@@ -161,13 +163,14 @@ object Rule {
             throw SyntaxError("Rule must contain ' -> '", expressionLine)
         )
 
-        val escaped = RegexSpecials.escape(left)
-        val regex = name2type.keys.foldLeft(escaped)(_.replace(_, raw"(\S+)")).r
+        // val escaped = RegexSpecials.escape(left)
+        // val regex = name2type.keys.foldLeft(escaped)(_.replace(_, raw"(\S+)")).r
+        val template = Template(left, name2type.keys)
 
         val namesWithTypes = getSubstringsAppearences(name2type.keys, left)
             .map(name => (name, name2type(name)))
 
-        new Rule(Metaformula(regex, ArraySeq.from(namesWithTypes)), right)
+        new Rule(Metaformula(template, ArraySeq.from(namesWithTypes)), right)
     }
 }
 
