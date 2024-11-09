@@ -58,5 +58,5 @@ public final class Utils {
         return program.RegexSpecials.unescape(s);
     }
 
-    public static final String regexVariableRepresentation = "(.+?)";
+    public static final String regexVariableRepresentation = "(\\S+)";
 }
