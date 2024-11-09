@@ -79,6 +79,6 @@ def toJsonType(atype: Type, typeMap: Map[Type, Int]): JsonType = {
 def toJsonRule(rule: Rule, typeMap: Map[Type, Int]): JsonRule = {
     val Metaformula(template, variables) = rule.left
     val json_variables = variables.map((name, t) => (name, typeMap(t)))
-    val json_meta = JsonMetaformula(template.regex, json_variables)
+    val json_meta = JsonMetaformula(template.getRegex, json_variables)
     JsonRule(json_meta, rule.right)
 }
