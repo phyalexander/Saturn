@@ -16,7 +16,7 @@ public class ContextsTemplate implements Template, Serializable {
             this.contexts[i] = contexts[i].toCharArray();
     }
 
-    private ContextsTemplate(char[][] contexts) {
+    public ContextsTemplate(char[][] contexts) {
         this.contexts = contexts;
     }
 
@@ -25,7 +25,7 @@ public class ContextsTemplate implements Template, Serializable {
         var expression = _expression.toString().toCharArray();
         int i = 0; // index of an expression char
 
-        final int start = substringIndex(expression, contexts[0], 0);
+        final int start = Utils.substringIndex(expression, contexts[0], 0);
         if (start == -1)
             return null;
 
@@ -34,7 +34,7 @@ public class ContextsTemplate implements Template, Serializable {
         i = start + contexts[0].length;
 
         for (int k = 1; k < groupsSize && i != -1; k++) {
-            int j = substringIndex(expression, contexts[k], i);
+            int j = Utils.substringIndex(expression, contexts[k], i);
             if (j == -1)
                 return null;
             groups[k-1] = _expression.subSequence(i, j).toString();
@@ -46,7 +46,7 @@ public class ContextsTemplate implements Template, Serializable {
         if (contexts[last].length == 0) {
             end = expression.length;
         } else {
-            end = substringIndex(expression, contexts[last], i);
+            end = Utils.substringIndex(expression, contexts[last], i);
             if (end == -1)
                 return null;
         }
@@ -71,31 +71,5 @@ public class ContextsTemplate implements Template, Serializable {
     @Override
     public String getRegex() {
         return Utils.contextsToRegex(getContexts());
-    }
-
-    /**
-     * Determines the index of the first occurrence of `target` within `source`.
-     *
-     * @note Inspired by C standard library function `strstr`, but specialized for
-     * this class usage.
-     *
-     * @param source The string to search in
-     * @param target The string to search for
-     * @param start Index from which to start searching
-     * @return index of the first occurrence of `target` within `source`, if found; -1 otherwise
-     */
-    private static int substringIndex(char[] source, char[] target, int start) {
-        final int tlen = target.length;
-        if (tlen == 0)
-            return start;
-        int i = start;
-        int slen = source.length;
-        while (slen >= tlen) {
-            slen--;
-            int j;
-            for (j = 0; j < tlen && source[i + j] == target[j]; j++) {}
-            if (j == tlen) return i;
-        }
-        return -1;
     }
 }
