@@ -36,29 +36,28 @@ class UtilTests extends munit.FunSuite {
 
     test("createContexts: basic") {
         val expression = "My name is NAME. My age is AGE"
-        val variablePositions = Array(
-            expression.indexOf("NAME"), // 11
-            expression.indexOf("AGE")   // 27
-        )
-        val expected = Array("My name is ", ". My age is ", "")
+        val variables = Array("NAME", "AGE")
+        val expected = Array("My name is ", ". My age is ", "").toSeq
 
-        val actual = Utils.createContexts(expression, variablePositions)
+        val actual = Utils.charArraysToStrings(Utils.createContexts(expression, variables)).toSeq
 
         assertEquals(actual, expected)
     }
 
     test("createContexts: from empty expression") {
-        val actual = Utils.createContexts("", Array())
-        assertEquals(actual, Array(""))
+        val expected = Array("").toSeq
+        val actual = Utils.charArraysToStrings(Utils.createContexts("", Array())).toSeq
+
+        assertEquals(actual, expected)
     }
 
     test("createContexts: from expression with no variables") {
         val expression = "Everything has its beauty, but not everyone sees it" // (c) Confucius
-        val expected = Array(expression)
+        val expected = Array(expression).toSeq
 
-        val actual = Utils.createContexts(expression, Array())
+        val actual = Utils.charArraysToStrings(Utils.createContexts(expression, Array())).toSeq
 
-        assertEquals(actual, expected)
+        (actual, expected)
     }
 
     ///

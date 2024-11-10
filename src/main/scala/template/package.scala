@@ -37,8 +37,7 @@ object Template {
                 new Template(new RegexTemplate(regex.pattern))
             }
             case JavaTemplate.TemplateType.CONTEXTS => {
-                val indexes = variableNames.iterator.map(expression.indexOf).toArray
-                val contexts = Utils.createContexts(expression, indexes)
+                val contexts = Utils.createContexts(expression, variableNames.iterator.toArray)
                 new Template(new ContextsTemplate(contexts))
             }
         }
