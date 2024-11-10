@@ -12,7 +12,7 @@ import scala.util.matching.Regex
  * @note Is used by [[program.Metaformula]]
  * */
 @SerialVersionUID(108024218808227L)
-final class Template private(private var inner: JavaTemplate) extends Serializable {
+final class Template(private var inner: JavaTemplate) extends Serializable {
 
     def tryMatch(formula: CharSequence): Option[Match] = Option(inner.tryMatch(formula))
 
