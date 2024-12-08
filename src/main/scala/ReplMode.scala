@@ -95,9 +95,6 @@ class ReplMode {
             println("\texit     exits this REPL mode")
         }
         case other => {
-            println("This command is not supported in the current version")
-            return
-
             if (other.startsWith(":unimport ")) {
                 val importName = other.drop(10)
                 val i = importList.indexOf(importName)
@@ -108,8 +105,9 @@ class ReplMode {
                 importList.remove(i)
                 val file = File(importName.replace('.', '/') ++ LanguageSyntax.fileExtension)
                 codeBase.filterInPlace(_.source == file)
+            } else {
+                println("This command is not supported in the current version")
             }
-
         }
     }
 
