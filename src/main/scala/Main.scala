@@ -2,6 +2,7 @@ import program.Program
 import exceptions.*
 import virtual_machine.SaturnVirtualMachine.execute
 import language_syntax.LanguageSyntax
+import repl_mode.ReplMode
 
 object Main {
 
@@ -14,6 +15,7 @@ object Main {
         args(0) match {
             case "run"     => runCommand(args)
             case "compile" => compileCommand(args)
+            case "repl"    => ReplMode.start()
             case "help"    => println(HELP_MESSAGE)
             case "version" => println("Saturn language tool ver. 1.0.0")
             case cmd       => println(s"Illegal command: $cmd")
@@ -104,6 +106,7 @@ The commands are:
 	run                     run program from .saturn or .ser file
 	compile                 compile program into .ser file
 	compile     -json       compile program into .json file
+    repl                    starts REPL mode
 	version                 print Saturn version
 	help                    print this help message
 
