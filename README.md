@@ -78,7 +78,7 @@
 
 ## Установка (Linux, MacOS)
 
-#### Скачать весь проект
+#### Весь проект с исходным кодом
 
 1. Установка [Scala Cursier](https://docs.scala-lang.org/getting-started/index.html)
 
@@ -97,18 +97,18 @@
     git clone https://github.com/phyalexander/Saturn.git
     ```
 
-3. Переход в директорию Saturn, запуск sbt и исполнителя для файла "demo.saturn"
+3. Переход в директорию Saturn, запуск sbt и вызов команды help-menu для Saturn"
 
     ```shell
     cd Saturn
     sbt
-    run language/demo.saturn
+    run help
     ```
 
 
-#### Установить только компилятор, виртуальную машину SVM и стандартную библиотеку
+#### Установить только компилятор и виртуальную машину SVM
 
-1. Установка JRE
+1. Установка Java Runtime Environment
 
     Для Archlinux семейства Linux:
     ```shell
@@ -134,11 +134,11 @@
     ```shell
     cd Saturn
     сhmod +x install_saturn.sh
+    ./install_saturn.sh
     ```
-4. Запустить программу `myprogram.saturn` можно командой
-    ```shell
-    saturn.sh myprogram.saturn
-    ```
+4. Saturn установлен. К нему можно обращаться по имени saturn.sh
+    Чтобы вызвать help-menu, используйте `saturn.sh help`. Чтобы исполнить
+    программу myprogram.saturn, используйте `saturn.sh run myprogram.saturn`
 
 
 ## Установка (Windows)
@@ -146,6 +146,81 @@
 1. Открыть браузер
 2. Скачать и установить [Linux](https://manjaro.org/products/download/x86)
 3. Выполнить установку под Linux
+
+
+## Docker
+
+Для создания Docker-image можно использовать один из Dockerfile'ов в папке
+docker.
+
+#### Только SVM и компилятор
+
+Вариант установки готовых к использованию инструментов Saturn, не требующий
+отдельного скачивания и установки Java Runtime Environment на Вашу ОС.
+Всё необходимое - уже в контейнере, который нужно лишь собрать. Для этого
+выполните действия:
+
+1. Клонирование репозитория
+
+    ```shell
+    git clone https://github.com/phyalexander/Saturn.git
+    ```
+
+2. Переход в дирректорию и выбор нужного Dockerfile
+    ```shell
+    cd Saturn
+    cp docker/svm_only/Dockerfile ./Dockerfile
+    ```
+
+3. Сборка образа
+    ```shell
+    docker build -t saturn .
+    ```
+4. Выход из дирректории и удаление лишних файлов
+    ```shell
+    cd ..
+    rm -rf Saturn
+    ```
+
+Примеры использования собранного образа
+```shell
+docker run -v "$PWD":$PWD --rm saturn run $PWD/code.saturn
+docker run -v "$PWD":$PWD --rm saturn help
+```
+
+#### Образ с исходным кодом проекта под управлением sbt
+
+В данном случае docker выступает в роли виртуальной машины
+с Linux внутри. Предполагаемый способ работы - через внутренний
+терминал образа.
+
+1. Клонирование репозитория
+
+    ```shell
+    git clone https://github.com/phyalexander/Saturn.git
+    ```
+
+2. Переход в дирректорию и выбор нужного Dockerfile
+    ```shell
+    cd Saturn
+    cp docker/sbt/Dockerfile ./Dockerfile
+    ```
+
+3. Сборка образа
+    ```shell
+    docker build -t saturn .
+    ```
+4. Выход из дирректории и удаление лишних файлов
+    ```shell
+    cd ..
+    rm -rf Saturn
+    ```
+
+Пример использования собранного образа
+```shell
+docker run -it saturn
+```
+
 
 
 ## Подсветка синтаксиса в редакторе Pulsar
@@ -166,10 +241,12 @@
 | Импорт других файлов (модулей)                     |      +     |
 | Запуск сторонних программ на Python, scala и т д   |      -     |
 | Чтение из файла и запись в файл                    |      -     |
-| Стандартная библиотека  (std)                      |      -     |
+| Стандартная библиотека  (std)*                     |      -     |
 | Режим REPL                                         |      -     |
 | Конструктор типа                                   |      -     |
+| Rust-engine (SVM implemented in Rust)              |      -     |
 
+\* <i>Находится в разработке, доступна лишь часть функционала</i>
 
 ## Синтаксис языка
 

@@ -1,25 +1,28 @@
 #!/bin/bash
 
-# Создаем папку ".Saturn" в домашней папке пользователя
+# Create directory ".Saturn" in the user's home directory
 mkdir -p $HOME/.Saturn
 
-# Определяем директорию, где находится сам скрипт
+# Determine where this script is located
 SCRIPT_DIR=$(dirname "\$0")
 
-# Копируем файл "jars/Saturn.jar", папку "language/std" и исполняемый скрипт в директорию ".Saturn"
+# Copy file "jars/Saturn.jar", directory "language/std"
+# and executable script into ".Saturn"
 cp -r "$SCRIPT_DIR/jars/Saturn.jar" "$SCRIPT_DIR/language/std" $HOME/.Saturn/
-cp -r "$SCRIPT_DIR/saturn.sh" ~/.Saturn/
+cp -r "$SCRIPT_DIR/saturn.sh" $HOME/.Saturn/
 
-# изменяем режим скрипта на исполняемый
+# Change script mode to executable
 chmod +x $HOME/.Saturn/saturn.sh
 
-# Добавляем директорию ".Saturn" в PATH
-echo "\n## Saturn language" >> ~/.bashrc
-echo "export PATH=\$PATH:$HOME/.Saturn" >> ~/.bashrc
+# Adding directory ".Saturn" to PATH
+if grep -q "## Saturn language" $HOME/.bashrc; then
+     echo "Saturn is already in PATH"
+else
+    echo "" >> ~/.bashrc
+    echo "## Saturn language" >> $HOME/.bashrc
+    echo "export PATH=\$PATH:$HOME/.Saturn" >> $HOME/.bashrc
 
-echo "\n## Saturn language" >> ~/.zshrc
-echo "export PATH=\$PATH:$HOME/.Saturn" >> ~/.zshrc
-
-# Удаляем git-репозиторий
-cd ..
-rm -rf Saturn
+    echo "" >> ~/.zshrc
+    echo "## Saturn language" >> $HOME/.zshrc
+    echo "export PATH=\$PATH:$HOME/.Saturn" >> $HOME/.zshrc
+fi
