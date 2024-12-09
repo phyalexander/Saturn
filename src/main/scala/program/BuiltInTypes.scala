@@ -1,6 +1,6 @@
 package program
 
-import language_syntax.LanguageSyntax
+import language_attributes.LanguageAttributes
 
 /** Built-in Saturn types factory. Provides built-in Saturn types' objects and
  *  tools for them.
@@ -15,7 +15,7 @@ object BuiltInTypes {
      *  and values as all defined built-in type objects
      */
     val defined: Map[TypeName, Type] = Map(
-        LanguageSyntax.anythingTypeName -> AnyType,
+        LanguageAttributes.anythingTypeName -> AnyType,
         "Int"     -> StdInteger,
         "Natural" -> StdNatural
     )
@@ -31,7 +31,7 @@ object BuiltInTypes {
         val err = Exception("Not supported built-in type") // for debug stage
         directives.DirectiveReader.importedBuiltInTypes
             .map(tname => (tname, defined.getOrElse(tname, throw err)))
-            .toMap.updated(LanguageSyntax.anythingTypeName, AnyType)
+            .toMap.updated(LanguageAttributes.anythingTypeName, AnyType)
     }
 
 

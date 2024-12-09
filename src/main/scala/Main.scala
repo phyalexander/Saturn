@@ -1,7 +1,7 @@
 import program.Program
 import exceptions.*
 import virtual_machine.SaturnVirtualMachine.execute
-import language_syntax.LanguageSyntax
+import language_attributes.LanguageAttributes
 import repl_mode.ReplMode
 
 object Main {
@@ -17,13 +17,11 @@ object Main {
             case "compile" => compileCommand(args)
             case "repl"    => ReplMode.start()
             case "help"    => println(HELP_MESSAGE)
-            case "version" => println(s"Saturn language version " + version)
-            case "upgrade" => upgrade_saturn.upgrade(version)
+            case "version" => println(s"Saturn language version " + LanguageAttributes.VERSION)
+            case "upgrade" => upgrade_saturn.upgrade(LanguageAttributes.VERSION)
             case cmd       => println(s"Illegal command: $cmd")
         }
     }
-
-    def version: String = "0.2.0"
 }
 
 
@@ -35,7 +33,7 @@ def runCommand(args: Array[String]): Unit = {
 
     for (path <- args.drop(1)) {
         try {
-            if (path.endsWith(LanguageSyntax.fileExtension)) {
+            if (path.endsWith(LanguageAttributes.fileExtension)) {
                 run(compile(path))
             } else if (path.endsWith(".ser")) {
                 run(Program.readFromFile(path))
@@ -59,15 +57,15 @@ def compileCommand(args: Array[String]): Unit = {
 
     val (filePaths, proc) = if (args(1) == "-json") {
         (args.drop(2), (prog: Program, name: String) => json.saveToJson(
-            prog, name.replace(LanguageSyntax.fileExtension, ".json")))
+            prog, name.replace(LanguageAttributes.fileExtension, ".json")))
     } else {
         (args.drop(1), (prog: Program, name: String) => prog.saveToFile(
-            name.replace(LanguageSyntax.fileExtension, ".ser")))
+            name.replace(LanguageAttributes.fileExtension, ".ser")))
     }
 
     for (path <- filePaths) {
         try {
-            if (path.endsWith(LanguageSyntax.fileExtension)) {
+            if (path.endsWith(LanguageAttributes.fileExtension)) {
                 proc(compile(path), path)
             } else {
                 println(s"Unsupported file extension: $path")

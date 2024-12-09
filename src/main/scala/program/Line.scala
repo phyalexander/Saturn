@@ -3,7 +3,7 @@ package program
 import scala.collection.StringOps
 import java.io.File
 
-import language_syntax.LanguageSyntax
+import language_attributes.LanguageAttributes
 
 
 /** A line in Saturn program file.
@@ -23,11 +23,11 @@ case class Line(content: String, position: Int, source: File) {
 
     /** Removes commentary parts from the line.
      *
-     *  @note Commentary sign is defined at [[language_syntax.LanguageSyntax]].
+     *  @note Commentary sign is defined at [[language_attributes.LanguageAttributes]].
      *  @return new line with removed commentary
      */
     def removeCommentary: Line =
-        copy(content = content.split(LanguageSyntax.commentBegining)(0))
+        copy(content = content.split(LanguageAttributes.commentBegining)(0))
 }
 
 /** Line implicit conversions. */

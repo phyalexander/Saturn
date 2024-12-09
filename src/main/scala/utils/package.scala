@@ -27,9 +27,5 @@ def trySplit(string: String, separator: String)(default: => (String, String)): (
 
 
 /** File, containing path to directory, where Saturn was installed */
-final val SATURN_HOME: File = {
-    val path = Option(System.getenv("HOME"))
-        .orElse(Option(System.getProperty("user.home")))
-        .getOrElse(throw FileNotFoundException("Can't find HOME directory"))
-    File(path, ".Saturn")
-}
+@deprecated("Use LanguageAttributes.SATURN_HOME instead", "0.3.0")
+val SATURN_HOME: File = language_attributes.LanguageAttributes.SATURN_HOME

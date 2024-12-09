@@ -1,6 +1,6 @@
 package upgrade_saturn
 
-import scala.util.{Using, Try, Success, Failure}
+import scala.util.Using
 
 import java.io.{BufferedOutputStream, FileOutputStream, File}
 
@@ -23,7 +23,7 @@ def upgrade(currentVersion: String): Unit = try {
         }
     }
 
-    val home = utils.SATURN_HOME.getPath
+    val home = language_attributes.LanguageAttributes.SATURN_HOME.getPath
 
     val load_link = s"https://codeload.github.com/phyalexander/Saturn/zip/refs/tags/$tag"
     val data: Array[Byte] = requests.get(load_link).contents

@@ -8,7 +8,7 @@ import scala.annotation.tailrec
 
 import program.*
 import exceptions.{SyntaxError, NotFoundError}
-import language_syntax.LanguageSyntax
+import language_attributes.LanguageAttributes
 import utils.{clearBackSlash, trySplit}
 import directives.DirectiveReader
 
@@ -68,13 +68,13 @@ def parseTypeLine(line: Line): (TypeName, MockType) = {
     val err = SyntaxError("Type annotation must contain one ' = '", line)
     val (namePart, description) = trySplit(line, " = ")(throw err)
     val parts = description.split(" : ")
-    val values = if (parts(0) == LanguageSyntax.nothing) Set.empty else parts(0).split(" ").toSet
+    val values = if (parts(0) == LanguageAttributes.nothing) Set.empty else parts(0).split(" ").toSet
     val parents = parts.length match {
         case 2 => parts(1).split(" ").toSet
         case 1 => Set.empty
         case _ => throw SyntaxError("Only one ' : ' expected", line)
     }
-    if (parents(LanguageSyntax.anythingTypeName))
+    if (parents(LanguageAttributes.anythingTypeName))
         println(s"WARNING: inheriting from Any doesn't make sense\n ${line.info}\n")
 
     (namePart.drop(5), MockType(values, parents, line))

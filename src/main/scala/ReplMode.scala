@@ -2,7 +2,7 @@ package repl_mode
 
 import program.*
 import exceptions.*
-import language_syntax.LanguageSyntax
+import language_attributes.LanguageAttributes
 
 import scala.collection.immutable.ArraySeq
 import scala.collection.mutable
@@ -109,7 +109,7 @@ class ReplMode {
                     return
                 }
                 importList.remove(i)
-                val file = File(importName.replace('.', '/') ++ LanguageSyntax.fileExtension)
+                val file = File(importName.replace('.', '/') ++ LanguageAttributes.fileExtension)
                 codeBase.filterInPlace(_.source == file)
             } else {
                 println("This command is not supported in the current version")

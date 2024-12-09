@@ -1,15 +1,14 @@
 package building
 
+import program.Line
+import exceptions.{NotFoundError, FileNotFoundError}
+import language_attributes.LanguageAttributes
+
 import scala.io.Source
-import scala.util.{Using, Try, Success, Failure}
-import scala.util.{Left, Right}
+import scala.util.Using
 import scala.annotation.tailrec
 
 import java.io.File
-
-import program.Line
-import exceptions.{NotFoundError, FileNotFoundError}
-import language_syntax.LanguageSyntax
 
 
 def buildFromModules(mainFileName: String): Vector[Line] = {
@@ -33,10 +32,10 @@ def invokeImports(file: File): Iterator[File] = readProgramFile(file)
 
 def parseImport(line: Line): File = {
     val stripped = line.drop(6).strip
-    val path = stripped.replace('.', '/') ++ LanguageSyntax.fileExtension
+    val path = stripped.replace('.', '/') ++ LanguageAttributes.fileExtension
 
     // NOTE: std files are in special directory
-    if (path.startsWith("std")) return File(utils.SATURN_HOME, path)
+    if (path.startsWith("std")) return File(LanguageAttributes.SATURN_HOME, path)
 
     def parent(file: File): Option[File] = Option(file.getParentFile)
 
