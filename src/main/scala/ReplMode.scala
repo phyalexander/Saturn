@@ -70,12 +70,18 @@ class ReplMode {
             println(s"Already imported: $importName")
             return
         }
-        importList += importName
-        val f = building.parseImport(importLine).toString
-        building.buildFromModules(f)
-            .filter(!_.content.startsWith("task:"))
-            .foreach(codeBase.push(_))
-        program = compilation.compileProgram(codeBase)
+        try {
+            val f = building.parseImport(importLine).toString
+            building.buildFromModules(f)
+                .filter(!_.content.startsWith("task:"))
+                .foreach(codeBase.push(_))
+            importList += importName
+            program = compilation.compileProgram(codeBase)
+        } catch {
+            case ex: CompilationError => ex.printMessage()
+            case ex: FileNotFoundError => println(ex.getMessage)
+            case ex: Exception => println(ex.getMessage)
+        }
     }
 
     private def runReplCommand(cmd: String): Unit = cmd match {
