@@ -10,5 +10,6 @@ lazy val root = project
     assembly / assemblyJarName := "Saturn.jar",
 
     libraryDependencies += "org.scalameta" %% "munit" % "1.0.0" % Test,
-    libraryDependencies += "com.lihaoyi" %% "upickle" % "3.1.0"
+    libraryDependencies += "com.lihaoyi" %% "upickle" % "3.1.0",
+    libraryDependencies += "com.lihaoyi" %% "requests" % "0.9.0"
   )

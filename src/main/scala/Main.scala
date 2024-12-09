@@ -17,10 +17,13 @@ object Main {
             case "compile" => compileCommand(args)
             case "repl"    => ReplMode.start()
             case "help"    => println(HELP_MESSAGE)
-            case "version" => println("Saturn language tool ver. 1.0.0")
+            case "version" => println(s"Saturn language version " + version)
+            case "upgrade" => upgrade_saturn.upgrade(version)
             case cmd       => println(s"Illegal command: $cmd")
         }
     }
+
+    def version: String = "0.2.0"
 }
 
 
@@ -95,20 +98,21 @@ def compile(sourceFile: String): Program = {
 
 val HELP_MESSAGE: String = """
 Saturn language tool for managing source code.
-	©phyalexander
+    ©phyalexander
 
 Usage:
 
-	saturn.sh <command> <options> [path to file]
+    saturn.sh <command> <options> [path to file]
 
 The commands are:
 
-	run                     run program from .saturn or .ser file
-	compile                 compile program into .ser file
-	compile     -json       compile program into .json file
+    run                     run program from .saturn or .ser file
+    compile                 compile program into .ser file
+    compile     -json       compile program into .json file
     repl                    starts REPL mode
-	version                 print Saturn version
-	help                    print this help message
+    upgrade                 tries to upgrade Saturn to the newest version
+    version                 print Saturn version
+    help                    print this help message
 
 Json files are needed for running by other implementations
 of Saturn Virtual Machine.
